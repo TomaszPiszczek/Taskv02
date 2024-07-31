@@ -1,0 +1,83 @@
+<div class="simulation-list" *ngIf="!loading; else loadingTemplate">
+    <h2>My Simulations</h2>
+
+    <div *ngIf="error" class="error-message">
+        {{ error }}
+    </div>
+
+    <ul>
+        <li *ngFor="let simulation of simulations; let i = index" class="simulation-item">
+            <div class="simulation-details">
+                <h3>{{ simulation.name }}</h3>
+                <p>Population Size: {{ simulation.populationSize }}</p>
+            </div>
+            <div class="simulation-actions">
+                <button (click)="editSimulation(simulation, i)">Edit</button>
+                <button (click)="showResults(simulation)">Show Results</button>
+            </div>
+
+            <!-- Edit Form -->
+            <div *ngIf="editIndex === i" class="edit-form">
+                <form (ngSubmit)="submitEdit()">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" [(ngModel)]="editedSimulation.name" name="name" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="populationSize">Population Size:</label>
+                        <input type="range" id="populationSizeRange" min="1" max="100000000000" [(ngModel)]="editedSimulation.populationSize" name="populationSize" (input)="validateEditForm()" />
+                        <input type="text" id="populationSize" [(ngModel)]="editedSimulation.populationSize" name="populationSizeText" (input)="validateEditForm()" />
+                        <div *ngIf="editFormErrors['populationSize']" class="error">{{ editFormErrors['populationSize'] }}</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="initialInfectedCount">Initial Infected Count:</label>
+                        <input type="range" id="initialInfectedCountRange" min="1" max="2000000000" [(ngModel)]="editedSimulation.initialInfectedCount" name="initialInfectedCount" (input)="validateEditForm()" />
+                        <input type="text" id="initialInfectedCount" [(ngModel)]="editedSimulation.initialInfectedCount" name="initialInfectedCountText" (input)="validateEditForm()" />
+                        <div *ngIf="editFormErrors['initialInfectedCount']" class="error">{{ editFormErrors['initialInfectedCount'] }}</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reproductionRate">Reproduction Rate:</label>
+                        <input type="range" id="reproductionRateRange" min="0.01" max="100" [(ngModel)]="editedSimulation.reproductionRate" name="reproductionRate" (input)="validateEditForm()" />
+                        <input type="text" id="reproductionRate" [(ngModel)]="editedSimulation.reproductionRate" name="reproductionRateText" (input)="validateEditForm()" />
+                        <div *ngIf="editFormErrors['reproductionRate']" class="error">{{ editFormErrors['reproductionRate'] }}</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mortalityRate">Mortality Rate:</label>
+                        <input type="range" id="mortalityRateRange" min="0.01" max="1.00" step="0.01" [(ngModel)]="editedSimulation.mortalityRate" name="mortalityRate" />
+                        <input type="text" id="mortalityRate" [(ngModel)]="editedSimulation.mortalityRate" name="mortalityRateText" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recoveryTime">Recovery Time:</label>
+                        <input type="range" id="recoveryTimeRange" min="1" max="10000" [(ngModel)]="editedSimulation.recoveryTime" name="recoveryTime" />
+                        <input type="text" id="recoveryTime" [(ngModel)]="editedSimulation.recoveryTime" name="recoveryTimeText" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mortalityTime">Mortality Time:</label>
+                        <input type="range" id="mortalityTimeRange" min="1" max="10000" [(ngModel)]="editedSimulation.mortalityTime" name="mortalityTime" />
+                        <input type="text" id="mortalityTime" [(ngModel)]="editedSimulation.mortalityTime" name="mortalityTimeText" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="simulationDuration">Simulation Duration:</label>
+                        <input type="range" id="simulationDurationRange" min="1" max="10000" [(ngModel)]="editedSimulation.simulationDuration" name="simulationDuration" />
+                        <input type="text" id="simulationDuration" [(ngModel)]="editedSimulation.simulationDuration" name="simulationDurationText" />
+                    </div>
+
+                    <button type="submit" class="submit-button" [disabled]="!isEditFormValid()">Update Simulation</button>
+                </form>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<ng-template #loadingTemplate>
+    <div class="loading">
+        <p>Loading simulations...</p>
+    </div>
+</ng-template>

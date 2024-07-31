@@ -1,0 +1,72 @@
+<div class="form-container">
+    <h2>Create New Simulation</h2>
+    <form [formGroup]="simulationForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input id="name" formControlName="name" type="text" required>
+            <div *ngIf="simulationForm.get('name')!.invalid && (simulationForm.get('name')!.dirty || simulationForm.get('name')!.touched)" class="error">
+                Name is required.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="populationSize">Population Size</label>
+            <input id="populationSize" formControlName="populationSize" type="number" required>
+            <div *ngIf="simulationForm.get('populationSize')!.invalid && (simulationForm.get('populationSize')!.dirty || simulationForm.get('populationSize')!.touched)" class="error">
+                Population Size must be greater than 0.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="initialInfectedCount">Initial Infected Count</label>
+            <input id="initialInfectedCount" formControlName="initialInfectedCount" type="number" required>
+            <div *ngIf="simulationForm.get('initialInfectedCount')!.invalid && (simulationForm.get('initialInfectedCount')!.dirty || simulationForm.get('initialInfectedCount')!.touched)" class="error">
+                Initial Infected Count must be greater than 0.
+            </div>
+            <div *ngIf="simulationForm.errors?.['initialInfectedInvalid'] && (simulationForm.get('initialInfectedCount')!.dirty || simulationForm.get('initialInfectedCount')!.touched)" class="error">
+                Initial Infected Count must be less than Population Size.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="reproductionRate">Reproduction Rate</label>
+            <input id="reproductionRate" formControlName="reproductionRate" type="number" min="0" max="100" step="0.01" required>
+            <div *ngIf="simulationForm.get('reproductionRate')!.invalid && (simulationForm.get('reproductionRate')!.dirty || simulationForm.get('reproductionRate')!.touched)" class="error">
+                Reproduction Rate must be from 0 to 100
+            </div>
+            <div *ngIf="simulationForm.errors?.['reproductionRateInvalid'] && (simulationForm.get('reproductionRate')!.dirty || simulationForm.get('reproductionRate')!.touched)" class="error">
+                Reproduction Rate times Initial Infected Count must be less than Population Size.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="mortalityRate">Mortality Rate</label>
+            <input id="mortalityRate" formControlName="mortalityRate" type="range" min="0" max="1" step="0.01">
+            <span>{{ simulationForm.get('mortalityRate')?.value }}</span>
+            <div *ngIf="simulationForm.get('mortalityRate')!.invalid && (simulationForm.get('mortalityRate')!.dirty || simulationForm.get('mortalityRate')!.touched)" class="error">
+                Mortality Rate must be between 0 and 1.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="recoveryTime">Recovery Time</label>
+            <input id="recoveryTime" formControlName="recoveryTime" type="number" required>
+            <div *ngIf="simulationForm.get('recoveryTime')!.invalid && (simulationForm.get('recoveryTime')!.dirty || simulationForm.get('recoveryTime')!.touched)" class="error">
+                Recovery Time must be greater than 0.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="mortalityTime">Mortality Time</label>
+            <input id="mortalityTime" formControlName="mortalityTime" type="number" required>
+            <div *ngIf="simulationForm.get('mortalityTime')!.invalid && (simulationForm.get('mortalityTime')!.dirty || simulationForm.get('mortalityTime')!.touched)" class="error">
+                Mortality Time must be greater than 0.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="simulationDuration">Simulation Duration</label>
+            <input id="simulationDuration" formControlName="simulationDuration" type="number" required>
+            <div *ngIf="simulationForm.get('simulationDuration')!.invalid && (simulationForm.get('simulationDuration')!.dirty || simulationForm.get('simulationDuration')!.touched)" class="error">
+                Simulation Duration must be greater than 0.
+            </div>
+        </div>
+        <button type="submit" [disabled]="!simulationForm.valid">Create Simulation</button>
+    </form>
+    <div *ngIf="apiError" class="error">
+        Error creating simulation. Please try again.
+    </div>
+</div>

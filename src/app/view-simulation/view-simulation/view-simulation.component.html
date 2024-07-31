@@ -1,0 +1,25 @@
+<div class="simulation-results">
+    <h2>Simulation Results</h2>
+
+    <div class="stats">
+        <div class="stat-card total-confirmed">
+            <h3>Healthy People</h3>
+            <p>{{ healthyCount }}</p>
+        </div>
+        <div class="stat-card active-cases">
+            <h3>Active Cases</h3>
+            <p>{{ activeCases }}</p>
+        </div>
+        <div class="stat-card total-recovered">
+            <h3>Recovered Cases</h3>
+            <p>{{ recoveredCount }}</p>
+        </div>
+        <div class="stat-card total-deaths">
+            <h3>Death Cases</h3>
+            <p>{{ deathCount }}</p>
+        </div>
+    </div>
+
+    <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [xaxis]="chartOptions.xaxis" [legend]="chartOptions.legend" [fill]="chartOptions.fill" [plotOptions]="chartOptions.plotOptions" [responsive]="chartOptions.responsive">
+    </apx-chart>
+</div>
