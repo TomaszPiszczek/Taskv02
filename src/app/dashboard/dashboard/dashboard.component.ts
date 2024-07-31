@@ -22,12 +22,6 @@ export class DashboardComponent implements OnInit {
   }
 
   fetchCovidData() {
-    /*const apiUrl = 'https://api.covid19api.com/summary';
-    this.http.get(apiUrl).subscribe((data: any) => {
-      this.totalConfirmed = data.Global.TotalConfirmed;
-      this.totalRecovered = data.Global.TotalRecovered;
-      this.totalDeaths = data.Global.TotalDeaths;
-      this.activeCases = this.totalConfirmed - this.totalRecovered - this.totalDeaths;
-    });*/
+   
   }
 }

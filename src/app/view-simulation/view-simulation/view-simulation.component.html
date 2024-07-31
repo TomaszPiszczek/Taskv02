@@ -1,6 +1,7 @@
 <div class="simulation-results">
     <h2>Simulation Results</h2>
 
+    <!-- Display stats -->
     <div class="stats">
         <div class="stat-card total-confirmed">
             <h3>Healthy People</h3>
@@ -20,6 +21,15 @@
         </div>
     </div>
 
-    <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [xaxis]="chartOptions.xaxis" [legend]="chartOptions.legend" [fill]="chartOptions.fill" [plotOptions]="chartOptions.plotOptions" [responsive]="chartOptions.responsive">
-    </apx-chart>
+    <ul>
+        <li *ngFor="let data of simulationData">
+            <strong>Day {{ data.day }}:</strong>
+            <ul>
+                <li>Infected Count: {{ data.infectedCount }}</li>
+                <li>Healthy Count: {{ data.healthyCount }}</li>
+                <li>Deceased Count: {{ data.deceasedCount }}</li>
+                <li>Recovered Count: {{ data.recoveredCount }}</li>
+            </ul>
+        </li>
+    </ul>
 </div>

@@ -5,7 +5,6 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BaseChartDirective  } from 'ng2-charts';
-import { NgApexchartsModule } from 'ng-apexcharts';
 
 import { routes } from './app.routes';
 import { ViewSimulationComponent } from './view-simulation/view-simulation/view-simulation.component';
@@ -26,6 +25,5 @@ export const appConfig: ApplicationConfig = {
     NewSimulationComponent,
     DashboardComponent,
     MySimulationsComponent,
-    NgApexchartsModule
   ]
 };
