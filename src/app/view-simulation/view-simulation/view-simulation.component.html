@@ -1,28 +1,59 @@
 <div class="simulation-results">
     <h2>Simulation Results</h2>
 
-    <!-- Display stats -->
     <div class="stats">
         <div class="stat-card total-confirmed">
-            <h3>Healthy People</h3>
+            <h3><i class="fas fa-smile-beam"></i> Healthy People</h3>
             <p>{{ healthyCount }}</p>
         </div>
         <div class="stat-card active-cases">
-            <h3>Active Cases</h3>
+            <h3><i class="fas fa-virus"></i> Active Cases</h3>
             <p>{{ activeCases }}</p>
         </div>
         <div class="stat-card total-recovered">
-            <h3>Recovered Cases</h3>
+            <h3><i class="fas fa-heart"></i> Recovered Cases</h3>
             <p>{{ recoveredCount }}</p>
         </div>
         <div class="stat-card total-deaths">
-            <h3>Death Cases</h3>
+            <h3><i class="fas fa-skull-crossbones"></i> Death Cases</h3>
             <p>{{ deathCount }}</p>
         </div>
     </div>
 
+    <div class="chart-navigation">
+        <button (click)="previousDays()">Previous</button>
+        <button (click)="nextDays()">Next</button>
+    </div>
+
+    <div class="slider-container">
+        <label for="daySliderBar">Days to Display (Bar): {{ displayedDays }}</label>
+        <input type="range" id="daySliderBar" min="1" max="500" [(ngModel)]="displayedDays" (change)="updateDisplayedData()" />
+    </div>
+
+    <div class="chart-container">
+        <div class="chart-wrapper">
+            <canvas id="barchart" (mouseenter)="onMouseEnterChart()" (mouseleave)="onMouseLeaveChart()" (wheel)="onWheelBarChart($event)"></canvas>
+        </div>
+    </div>
+
+    <div class="chart-navigation">
+        <button (click)="previousDaysLine()">Previous</button>
+        <button (click)="nextDaysLine()">Next</button>
+    </div>
+
+    <div class="slider-container">
+        <label for="daySliderLine">Days to Display (Line): {{ displayedDaysLine }}</label>
+        <input type="range" id="daySliderLine" min="1" max="500" [(ngModel)]="displayedDaysLine" (change)="updateDisplayedDataLine()" />
+    </div>
+
+    <div class="chart-container">
+        <div class="chart-wrapper">
+            <canvas id="linechart" (mouseenter)="onMouseEnterLineChart()" (mouseleave)="onMouseLeaveLineChart()" (wheel)="onWheelLineChart($event)"></canvas>
+        </div>
+    </div>
+
     <ul>
-        <li *ngFor="let data of simulationData">
+        <li *ngFor="let data of displayedData">
             <strong>Day {{ data.day }}:</strong>
             <ul>
                 <li>Infected Count: {{ data.infectedCount }}</li>

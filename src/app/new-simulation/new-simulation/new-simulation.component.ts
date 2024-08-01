@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CustomValidators } from './custom-validators'; // Import the custom validators
+import { CustomValidators } from './custom-validators';
 
 @Component({
   selector: 'app-new-simulation',
@@ -40,7 +40,7 @@ export class NewSimulationComponent {
       this.http.post('http://localhost:8080/api/v1/simulations', this.simulationForm.value)
         .subscribe(
           (response: any) => {
-            this.router.navigate(['/view-simulation'], { state: { simulation: response } });
+            this.router.navigate(['/my-simulations']);
           },
           error => {
             this.apiError = true;
@@ -49,4 +49,5 @@ export class NewSimulationComponent {
         );
     }
   }
+  
 }

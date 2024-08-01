@@ -3,7 +3,7 @@ import { SimulationService, Simulation } from '../../services/simulation.service
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router'; // Import Router for navigation
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-simulations',
@@ -33,7 +33,7 @@ export class MySimulationsComponent implements OnInit {
   constructor(
     private simulationService: SimulationService,
     private http: HttpClient,
-    private router: Router // Add Router to constructor
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -61,30 +61,25 @@ export class MySimulationsComponent implements OnInit {
   }
 
   showResults(simulation: Simulation) {
-    const url = `http://localhost:8080/api/v1/simulations/results/${simulation.id}`;
-    this.http.get(url).subscribe(
-      (resultData: any) => {
-        // Navigate to the ViewSimulationComponent with the fetched data
-        this.router.navigate(['/view-simulation'], {
-          state: { simulation: resultData },
-        });
-      },
-      (error) => {
-        console.error('Failed to fetch simulation results:', error);
-        this.error = 'Failed to fetch simulation results.';
-      }
-    );
+    this.router.navigate(['/view-simulation'], {
+      state: { simulationId: simulation.id },
+    });
   }
-
   validateEditForm() {
     this.editFormErrors = {};
-    if (this.editedSimulation.initialInfectedCount >= this.editedSimulation.populationSize) {
-      this.editFormErrors['initialInfectedCount'] = 'Initial Infected Count must be less than Population Size.';
+    const { initialInfectedCount, populationSize, reproductionRate } = this.editedSimulation;
+
+    const initialInfectedCountNum = Number(initialInfectedCount);
+    const populationSizeNum = Number(populationSize);
+    const reproductionRateNum = Number(reproductionRate);
+
+    if (initialInfectedCountNum >= populationSizeNum) {
+        this.editFormErrors['initialInfectedCount'] = 'Initial Infected Count must be less than Population Size.';
     }
-    if (this.editedSimulation.reproductionRate * this.editedSimulation.initialInfectedCount >= this.editedSimulation.populationSize) {
-      this.editFormErrors['reproductionRate'] = 'Reproduction Rate times Initial Infected Count must be less than Population Size.';
+    if (reproductionRateNum * initialInfectedCountNum >= populationSizeNum) {
+        this.editFormErrors['reproductionRate'] = 'Reproduction Rate times Initial Infected Count must be less than Population Size.';
     }
-  }
+}
 
   isEditFormValid(): boolean {
     return Object.keys(this.editFormErrors).length === 0;

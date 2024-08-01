@@ -18,7 +18,7 @@ export interface Simulation {
   providedIn: 'root'
 })
 export class SimulationService {
-  private apiUrl = 'http://localhost:8080/api/v1/simulations/';
+  private apiUrl = 'http://localhost:8080/api/v1/simulations';
 
   constructor(private http: HttpClient) {}
 
